@@ -121,7 +121,7 @@ const handleCommand = (command)=>{
         <el-container>
             <!-- 头部区域 -->
             <el-header>
-                <div>您的用户名为：<strong>{{ userInfoStore.info.nickname ? userInfoStore.info.nickname :
+                <div>您的用户昵称为：<strong>{{ userInfoStore.info.nickname ? userInfoStore.info.nickname :
                         userInfoStore.info.usrename }}
                     </strong></div>
 
