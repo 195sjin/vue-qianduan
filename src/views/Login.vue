@@ -55,6 +55,11 @@ const register = async ()=>{
 import { useRouter } from 'vue-router'
 const router = useRouter();
 
+//导入token状态
+import { useTokenStore } from '@/stores/token.js'
+//调用useTokenStore得到状态
+const tokenStore = useTokenStore();
+
 const login=async()=>{
     let result=await userLoginService(registerData.value);
     /* if (result.code===0) {
@@ -63,6 +68,10 @@ const login=async()=>{
         alert('登录失败')
     } */
    //alert(result.msg ? result.msg : '登录成功')
+
+   //保存token
+    tokenStore.setToken(result.data)
+    
    ElMessage.success(result.msg ? result.msg : '登录成功')
    //登录成功，跳转页面，由路由完成
    router.push('/')
