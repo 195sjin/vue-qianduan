@@ -8,6 +8,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 //导入持久化插件
 import {createPersistedState} from'pinia-persistedstate-plugin'
+import locale from 'element-plus/dist/locale/zh-cn.js'
+
+
 
 const app = createApp(App)
 
@@ -19,6 +22,6 @@ pinia.use(persist)
 
 app.use(router)
 
-app.use(ElementPlus)
+app.use(ElementPlus,{locale})
 
 app.mount('#app')
