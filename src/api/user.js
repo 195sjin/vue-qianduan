@@ -16,3 +16,7 @@ export const userLoginService=(loginData)=>{
     }
     return request.post('/user/login',params)
 }
+//获取个人信息
+export const userInfoGetService = ()=>{
+    return request.get('/user/userInfo');
+}
