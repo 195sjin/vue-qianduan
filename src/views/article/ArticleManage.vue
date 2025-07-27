@@ -88,16 +88,16 @@ const onCurrentChange = (num) => {
 }
 
 //文章列表查询
-import { articleCategoryListService } from '@/api/article.js'
+import { articleCategoryListService,articleListService,articleAddService } from '@/api/article.js'
 const getArticleCategoryList = async () => {
     //获取所有分类
     let resultC = await articleCategoryListService();
     categorys.value = resultC.data
 }
 
+import { ElMessage } from 'element-plus'
 
 //文章列表查询
-import { articleListService } from '@/api/article.js'
 const getArticles = async () => {
     let params = {
         pageNum: pageNum.value,
@@ -146,6 +146,18 @@ const tokenStore = useTokenStore();
 const uploadSuccess = (img) => {
     //img就是后台响应的数据，格式为：{code:状态码，message：提示信息，data: 图片的存储地址}
     articleModel.value.coverImg=img.data
+}
+
+//添加文章
+const addArticle=async (state)=>{
+    articleModel.value.state = state
+    let result = await articleAddService(articleModel.value);
+    ElMessage.success(result.message? result.message:'添加成功')
+    //隐藏抽屉
+    visibleDrawer.value=false
+    //再次调用getArticles,获取文章
+    getArticles()
+    
 }
 
 </script>
@@ -252,8 +264,8 @@ const uploadSuccess = (img) => {
                     </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">发布</el-button>
-                    <el-button type="info">草稿</el-button>
+                    <el-button type="primary" @click="addArticle('已发布')">发布</el-button>
+                    <el-button type="info" @click="addArticle('草稿')">草稿</el-button>
                 </el-form-item>
             </el-form>
         </el-drawer>
