@@ -24,3 +24,9 @@ export const userInfoGetService = ()=>{
 export const userInfoUpdateService = (userInfo)=>{
     return request.put('/user/update',userInfo)
 }
+//修改头像
+export const userAvatarUpdateService=(avatarUrl)=>{
+    let params = new URLSearchParams();
+    params.append('avatarUrl',avatarUrl)
+    return request.patch('/user/updateAvatar',params)
+}
