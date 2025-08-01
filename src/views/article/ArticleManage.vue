@@ -89,7 +89,7 @@ const onCurrentChange = (num) => {
 }
 
 //文章列表查询
-import { articleCategoryListService, articleListService, articleAddService, articleDetailService, articleUpdateService } from '@/api/article.js'
+import { articleCategoryListService, articleListService, articleAddService, articleDetailService, articleUpdateService, articleDeleteService } from '@/api/article.js'
 const getArticleCategoryList = async () => {
     //获取所有分类
     let resultC = await articleCategoryListService();
@@ -97,6 +97,7 @@ const getArticleCategoryList = async () => {
 }
 
 import { ElMessage } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 
 //文章列表查询
 const getArticles = async () => {
@@ -242,6 +243,35 @@ const updateArticle = async (state) => {
 const editUploadSuccess = (img) => {
   editArticleModel.value.coverImg = img.data
 }
+
+// 删除文章方法
+const deleteArticle = async (id) => {
+  try {
+    // 显示确认对话框
+    const confirmResult = await ElMessageBox.confirm(
+      '确定要删除这篇文章吗？',
+      '删除确认',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    )
+
+    if (confirmResult === 'confirm') {
+      // 用户点击了确定按钮
+      const result = await articleDeleteService(id)
+      ElMessage.success(result.message || '删除成功')
+      // 刷新文章列表
+      getArticles()
+    }
+  } catch (error) {
+    // 如果是用户取消操作，不显示错误提示
+    if (error !== 'cancel') {
+      ElMessage.error('删除失败')
+    }
+  }
+}
 </script>
 <template>
     <el-card class="page-container">
@@ -284,7 +314,7 @@ const editUploadSuccess = (img) => {
               <template #default="{ row }">
                 <el-button :icon="InfoFilled" circle plain type="info" @click="viewArticleDetail(row.id)"></el-button>
                 <el-button :icon="Edit" circle plain type="primary" @click="openEditDrawer(row.id)"></el-button>
-                <el-button :icon="Delete" circle plain type="danger"></el-button>
+                <el-button :icon="Delete" circle plain type="danger" @click="deleteArticle(row.id)"></el-button>
               </template>
             </el-table-column>
             <template #empty>

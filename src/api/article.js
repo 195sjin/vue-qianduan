@@ -41,3 +41,8 @@ export const articleDetailService = (id) => {
 export const articleUpdateService = (articleModel) => {
   return request.put('/article', articleModel)
 }
+
+// 添加删除文章API函数
+export const articleDeleteService = (id) => {
+  return request.delete('/article?id=' + id)
+}
