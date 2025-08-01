@@ -1,7 +1,8 @@
 <script setup>
 import {
     Edit,
-    Delete
+    Delete,
+    InfoFilled
 } from '@element-plus/icons-vue'
 
 import { ref } from 'vue'
@@ -88,7 +89,7 @@ const onCurrentChange = (num) => {
 }
 
 //文章列表查询
-import { articleCategoryListService,articleListService,articleAddService } from '@/api/article.js'
+import { articleCategoryListService, articleListService, articleAddService, articleDetailService } from '@/api/article.js'
 const getArticleCategoryList = async () => {
     //获取所有分类
     let resultC = await articleCategoryListService();
@@ -160,6 +161,34 @@ const addArticle=async (state)=>{
     
 }
 
+// 文章详情相关变量
+const detailDialogVisible = ref(false)
+const articleDetail = ref({})
+
+// 查看文章详情方法
+const viewArticleDetail = async (id) => {
+  try {
+    const result = await articleDetailService(id)
+    articleDetail.value = result.data
+    
+    // 添加文章分类名称
+    for(let j=0;j<categorys.value.length;j++){
+      if(articleDetail.value.categoryId === categorys.value[j].id){
+        articleDetail.value.categoryName = categorys.value[j].categoryName
+        break
+      }
+    }
+    
+    // 确保coverImg字段存在
+    if(!articleDetail.value.coverImg){
+      articleDetail.value.coverImg = ''
+    }
+    
+    detailDialogVisible.value = true
+  } catch (error) {
+    ElMessage.error('获取文章详情失败')
+  }
+}
 </script>
 <template>
     <el-card class="page-container">
@@ -197,11 +226,13 @@ const addArticle=async (state)=>{
             <el-table-column label="分类" prop="categoryName"></el-table-column>
             <el-table-column label="发表时间" prop="createTime"> </el-table-column>
             <el-table-column label="状态" prop="state"></el-table-column>
-            <el-table-column label="操作" width="100">
-                <template #default="{ row }">
-                    <el-button :icon="Edit" circle plain type="primary"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
-                </template>
+            // 修改操作列的模板代码
+            <el-table-column label="操作" width="150">
+              <template #default="{ row }">
+                <el-button :icon="InfoFilled" circle plain type="info" @click="viewArticleDetail(row.id)"></el-button>
+                <el-button :icon="Edit" circle plain type="primary"></el-button>
+                <el-button :icon="Delete" circle plain type="danger"></el-button>
+              </template>
             </el-table-column>
             <template #empty>
                 <el-empty description="没有数据" />
@@ -270,7 +301,30 @@ const addArticle=async (state)=>{
             </el-form>
         </el-drawer>
 
-
+        <!-- 文章详情弹窗 -->
+        <el-dialog v-model="detailDialogVisible" title="文章详情" width="50%">
+          <el-form :model="articleDetail" label-width="100px">
+            <el-form-item label="文章标题">
+              <el-input v-model="articleDetail.title" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="文章分类">
+              <el-input v-model="articleDetail.categoryName" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="发表时间">
+              <el-input v-model="articleDetail.createTime" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="状态">
+              <el-input v-model="articleDetail.state" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="封面图片">
+              <img v-if="articleDetail.coverImg" :src="articleDetail.coverImg" style="width: 200px; height: 150px; object-fit: cover;">
+              <span v-else>无封面图片</span>
+            </el-form-item>
+            <el-form-item label="文章内容">
+              <div v-html="articleDetail.content" style="min-height: 200px;"></div>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
 
     </el-card>
 </template>

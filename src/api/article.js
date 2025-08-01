@@ -31,3 +31,8 @@ export const articleListService = (params) => {
 export const articleAddService = (articleModel)=>{
     return request.post('/article',articleModel)
 }
+// 确保文件中包含此API函数
+// 获取文章详情
+export const articleDetailService = (id) => {
+  return request.get('/article/detail', { params: { id } })
+}
