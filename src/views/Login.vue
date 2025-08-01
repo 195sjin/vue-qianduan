@@ -39,7 +39,8 @@
                 <el-form-item prop="password">
                     <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
                 </el-form-item>
-                <el-form-item class="flex">
+                <!-- 隐藏记住我和忘记密码 -->
+                <el-form-item class="flex" v-if="false">
                     <div class="flex">
                         <el-checkbox>记住我</el-checkbox>
                         <el-link type="primary" :underline="false">忘记密码？</el-link>
