@@ -1,92 +1,3 @@
-<script setup>
-import { User, Lock } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-//导入消息提示组件
-import { ElMessage } from 'element-plus'
-//控制注册与登录表单的显示， 默认显示注册
-const isRegister = ref(false)
-//定义数据类型
-const registerData = ref({
-    username:'',
-    password:'',
-    rePassword:''
-})
-//校验密码的函数
-const checkRePassword = (rule,value,callback)=>{
-    if(value===''){
-        callback(new Error('请再次确认密码'))
-    }else if(value !=registerData.value.password){
-        callback(new Error('请确保两次输入的密码一样'))
-    }else{
-        callback()
-    }
-}
-//定义表单校验规则
-const rules = {
-    username: [
-        {required:true,message:'请输入用户名',trigger:'blur'},
-        {min:5,max:16,message:'长度为5~16位非空字符',trigger:'blur'}
-    ],
-    password: [
-        {required:true,message:'请输入密码',trigger:'blur'},
-        {min:5,max:16,message:'长度为5~16位非空字符',trigger:'blur'}
-    ],
-    rePassword: [
-        {validator:checkRePassword,trigger:'blur'}
-    ]
-}
-
-//调用后台接口，完成注册
-import { userRegisterService ,userLoginService} from '@/api/user.js'
-
-const register = async ()=>{
-    let result = await userRegisterService(registerData.value);
-    /* if(result.code===0){
-        alert(result.msg ? result.msg : '注册成功');
-    }else{
-        alert('注册失败');
-    } */
-  //alert(result.msg ? result.msg : '注册成功');
-  ElMessage.success(result.msg ? result.msg : '注册成功')
-}
-//调用后台接口，完成登录。。。。绑定数据，复用注册表单的数据模型
-//表单数据校验
-//登录函数
-import { useRouter } from 'vue-router'
-const router = useRouter();
-
-//导入token状态
-import { useTokenStore } from '@/stores/token.js'
-//调用useTokenStore得到状态
-const tokenStore = useTokenStore();
-
-const login=async()=>{
-    let result=await userLoginService(registerData.value);
-    /* if (result.code===0) {
-        alert(result.msg ? result.msg : '登录成功')
-    } else {
-        alert('登录失败')
-    } */
-   //alert(result.msg ? result.msg : '登录成功')
-
-   //保存token
-    tokenStore.setToken(result.data)
-    
-   ElMessage.success(result.msg ? result.msg : '登录成功')
-   //登录成功，跳转页面，由路由完成
-   router.push('/')
-}
-
-//定义函数，清空数据模型的数据
-const clearRegisterData=()=>{
-    registerData.value={
-        username:'',
-        password:'',
-        rePassword:''
-    }
-}
-</script>
-
 <template>
     <el-row class="login-page">
         <el-col :span="12" class="bg"></el-col>
@@ -147,6 +58,81 @@ const clearRegisterData=()=>{
         </el-col>
     </el-row>
 </template>
+
+<script setup>
+import { User, Lock } from '@element-plus/icons-vue'
+import { ref } from 'vue'
+//导入消息提示组件
+import { ElMessage } from 'element-plus'
+//控制注册与登录表单的显示， 默认显示注册
+const isRegister = ref(false)
+//定义数据类型
+const registerData = ref({
+    username:'',
+    password:'',
+    rePassword:''
+})
+//校验密码的函数
+const checkRePassword = (rule,value,callback)=>{
+    if(value===''){
+        callback(new Error('请再次确认密码'))
+    }else if(value !=registerData.value.password){
+        callback(new Error('请确保两次输入的密码一样'))
+    }else{
+        callback()
+    }
+}
+//定义表单校验规则
+const rules = {
+    username: [
+        {required:true,message:'请输入用户名',trigger:'blur'},
+        {min:5,max:16,message:'长度为5~16位非空字符',trigger:'blur'}
+    ],
+    password: [
+        {required:true,message:'请输入密码',trigger:'blur'},
+        {min:5,max:16,message:'长度为5~16位非空字符',trigger:'blur'}
+    ],
+    rePassword: [
+        {validator:checkRePassword,trigger:'blur'}
+    ]
+}
+
+//调用后台接口，完成注册
+import { userRegisterService ,userLoginService} from '@/api/user.js'
+
+const register = async ()=>{
+    let result = await userRegisterService(registerData.value);
+    ElMessage.success(result.msg ? result.msg : '注册成功')
+}
+//调用后台接口，完成登录。。。。绑定数据，复用注册表单的数据模型
+//表单数据校验
+//登录函数
+import { useRouter } from 'vue-router'
+const router = useRouter();
+
+//导入token状态
+import { useTokenStore } from '@/stores/token.js'
+//调用useTokenStore得到状态
+const tokenStore = useTokenStore();
+
+const login=async()=>{
+    let result=await userLoginService(registerData.value);
+    //保存token
+    tokenStore.setToken(result.data)
+    ElMessage.success(result.msg ? result.msg : '登录成功')
+    //登录成功，跳转页面，由路由完成
+    router.push('/')
+}
+
+//定义函数，清空数据模型的数据
+const clearRegisterData=()=>{
+    registerData.value={
+        username:'',
+        password:'',
+        rePassword:''
+    }
+}
+</script>
 
 <style lang="scss" scoped>
 /* 样式 */

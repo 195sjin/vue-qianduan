@@ -1,38 +1,30 @@
-//导入vue-router
-import { createRouter, createWebHistory } from 'vue-router'
-//导入组件
-import LoginVue from '@/views/Login.vue'
-import LayoutVue from '@/views/Layout.vue'
-import ArticleCategoryVue from '@/views/article/ArticleCategory.vue'
-import ArticleManageVue from '@/views/article/ArticleManage.vue'
-import UserInfoVue from '@/views/user/UserInfo.vue'
-import UserAvatarVUe from '@/views/user/UserAvatar.vue'
-import UserResetPasswordVue from '@/views/user/UserResetPassword.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import LoginVue from '@/views/Login.vue';
+import LayoutVue from '@/views/Layout.vue';
+import ArticleCategoryVue from '@/views/article/ArticleCategory.vue';
+import ArticleManageVue from '@/views/article/ArticleManage.vue';
+import UserInfoVue from '@/views/user/UserInfo.vue';
+import UserAvatarVUe from '@/views/user/UserAvatar.vue';
+import UserResetPasswordVue from '@/views/user/UserResetPassword.vue';
 
-//定义路由关系
-//定义路由关系
 const routes = [
     { path: '/login', component: LoginVue },
-    {
-        path: '/',
-        component: LayoutVue,
-        //重定向
-        redirect: '/article/manage',
-        //子路由
+    { path: '/', component: LayoutVue, redirect: '/article/manage',
         children: [
             { path: '/article/category', component: ArticleCategoryVue },
             { path: '/article/manage', component: ArticleManageVue },
             { path: '/user/info', component: UserInfoVue },
             { path: '/user/avatar', component: UserAvatarVUe },
-            { path: '/user/resetPassword', component: UserResetPasswordVue },
+            { path: '/user/resetPassword', component: UserResetPasswordVue,
+                meta: { requiresAuth: true, title: '更新密码' }
+            }
         ]
     }
-]
+];
 
-//创建路由器
 const router = createRouter({
-    history: createWebHistory(),
-    routes: routes
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes
 });
 
-export default router
+export default router;

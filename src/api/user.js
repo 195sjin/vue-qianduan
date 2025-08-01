@@ -1,5 +1,22 @@
-import request from '@/utils/request.js'
-//提供调用注册接口的函数
+import request from '@/utils/request';
+
+// 更新用户密码
+export function updateUserPassword(data) {
+  return request({
+    url: '/user/updatePwd',
+    method: 'patch',
+    data: {
+      old_Pwd: data.old_Pwd,
+      new_Pwd: data.new_Pwd,
+      re_Pwd: data.re_Pwd
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
+// 其他用户相关API...
 export const userRegisterService = (registerData)=>{
     const params = new URLSearchParams()
     for(let key in registerData){
