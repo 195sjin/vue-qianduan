@@ -174,14 +174,14 @@ const addArticle=async (state)=>{
         <!-- 搜索表单 -->
         <el-form inline>
             <el-form-item label="文章分类：">
-                <el-select placeholder="请选择" v-model="categoryId">
+                <el-select placeholder="请选择" v-model="categoryId" style="width: 180px;">
                     <el-option v-for="c in categorys" :key="c.id" :label="c.categoryName" :value="c.id">
                     </el-option>
                 </el-select>
             </el-form-item>
 
             <el-form-item label="发布状态：">
-                <el-select placeholder="请选择" v-model="state">
+                <el-select placeholder="请选择" v-model="state" style="width: 180px;">
                     <el-option label="已发布" value="已发布"></el-option>
                     <el-option label="草稿" value="草稿"></el-option>
                 </el-select>
