@@ -75,7 +75,7 @@ const articles = ref([
 //分页条数据模型
 const pageNum = ref(1)//当前页
 const total = ref(20)//总条数
-const pageSize = ref(3)//每页条数
+const pageSize = ref(5)//每页条数
 
 //当每页条数发生了变化，调用此函数
 const onSizeChange = (size) => {
@@ -270,7 +270,7 @@ const editUploadSuccess = (img) => {
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="getArticles">搜索</el-button>
-                <el-button @click="categoryId='';state=''">重置</el-button>
+                <el-button @click="categoryId='';state='';getArticles()">重置</el-button>
             </el-form-item>
         </el-form>
         <!-- 文章列表 -->
@@ -292,7 +292,7 @@ const editUploadSuccess = (img) => {
             </template>
         </el-table>
         <!-- 分页条 -->
-        <el-pagination v-model:current-page="pageNum" v-model:page-size="pageSize" :page-sizes="[3, 5 ,10, 15]"
+        <el-pagination v-model:current-page="pageNum" v-model:page-size="pageSize" :page-sizes="[5, 10 ,15, 20]"
             layout="jumper, total, sizes, prev, pager, next" background :total="total" @size-change="onSizeChange"
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
 
