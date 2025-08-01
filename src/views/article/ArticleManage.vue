@@ -89,7 +89,7 @@ const onCurrentChange = (num) => {
 }
 
 //文章列表查询
-import { articleCategoryListService, articleListService, articleAddService, articleDetailService } from '@/api/article.js'
+import { articleCategoryListService, articleListService, articleAddService, articleDetailService, articleUpdateService } from '@/api/article.js'
 const getArticleCategoryList = async () => {
     //获取所有分类
     let resultC = await articleCategoryListService();
@@ -138,6 +138,16 @@ const articleModel = ref({
     state:''
 })
 
+// 添加编辑相关变量
+const editDrawerVisible = ref(false)
+const editArticleModel = ref({
+    id: '',
+    title: '',
+    categoryId: '',
+    coverImg: '',
+    content:'',
+    state:''
+})
 
 
 import { useTokenStore } from '@/stores/token.js'
@@ -189,6 +199,49 @@ const viewArticleDetail = async (id) => {
     ElMessage.error('获取文章详情失败')
   }
 }
+
+// 打开编辑抽屉方法
+const openEditDrawer = async (id) => {
+  try {
+    const result = await articleDetailService(id)
+    const articleData = result.data
+    // 填充编辑表单数据
+    editArticleModel.value = {
+      id: articleData.id,
+      title: articleData.title,
+      categoryId: articleData.categoryId,
+      coverImg: articleData.coverImg || '',
+      content: articleData.content,
+      state: articleData.state
+    }
+    editDrawerVisible.value = true
+  } catch (error) {
+    ElMessage.error('获取文章详情失败')
+  }
+}
+
+// 更新文章方法
+const updateArticle = async (state) => {
+  try {
+    const updateModel = {
+      ...editArticleModel.value,
+      state: state
+    }
+    const result = await articleUpdateService(updateModel)
+    ElMessage.success(result.message || '更新成功')
+    // 关闭抽屉
+    editDrawerVisible.value = false
+    // 刷新文章列表
+    getArticles()
+  } catch (error) {
+    ElMessage.error('更新失败')
+  }
+}
+
+// 编辑时上传图片成功回调
+const editUploadSuccess = (img) => {
+  editArticleModel.value.coverImg = img.data
+}
 </script>
 <template>
     <el-card class="page-container">
@@ -230,7 +283,7 @@ const viewArticleDetail = async (id) => {
             <el-table-column label="操作" width="150">
               <template #default="{ row }">
                 <el-button :icon="InfoFilled" circle plain type="info" @click="viewArticleDetail(row.id)"></el-button>
-                <el-button :icon="Edit" circle plain type="primary"></el-button>
+                <el-button :icon="Edit" circle plain type="primary" @click="openEditDrawer(row.id)"></el-button>
                 <el-button :icon="Delete" circle plain type="danger"></el-button>
               </template>
             </el-table-column>
@@ -326,6 +379,41 @@ const viewArticleDetail = async (id) => {
           </el-form>
         </el-dialog>
 
+        <!-- 编辑文章抽屉 -->
+        <el-drawer v-model="editDrawerVisible" title="编辑文章" direction="rtl" size="50%">
+          <el-form :model="editArticleModel" label-width="100px">
+            <el-form-item label="文章标题">
+              <el-input v-model="editArticleModel.title" placeholder="请输入标题"></el-input>
+            </el-form-item>
+            <el-form-item label="文章分类">
+              <el-select placeholder="请选择" v-model="editArticleModel.categoryId">
+                <el-option v-for="c in categorys" :key="c.id" :label="c.categoryName" :value="c.id"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="文章封面">
+              <el-upload class="avatar-uploader" :auto-upload="true" :show-file-list="false"
+                action="/api/upload"
+                name="file"
+                :headers="{'Authorization':tokenStore.token}"
+                :on-success="editUploadSuccess"
+              >
+                <img v-if="editArticleModel.coverImg" :src="editArticleModel.coverImg" class="avatar" />
+                <el-icon v-else class="avatar-uploader-icon">
+                  <Plus />
+                </el-icon>
+              </el-upload>
+            </el-form-item>
+            <el-form-item label="文章内容">
+              <div class="editor">
+                <quill-editor theme="snow" v-model:content="editArticleModel.content" contentType="html"></quill-editor>
+              </div>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="updateArticle('已发布')">发布</el-button>
+              <el-button type="info" @click="updateArticle('草稿')">保存为草稿</el-button>
+            </el-form-item>
+          </el-form>
+        </el-drawer>
     </el-card>
 </template>
 <style lang="scss" scoped>

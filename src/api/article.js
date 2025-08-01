@@ -36,3 +36,8 @@ export const articleAddService = (articleModel)=>{
 export const articleDetailService = (id) => {
   return request.get('/article/detail', { params: { id } })
 }
+
+// 添加更新文章API函数
+export const articleUpdateService = (articleModel) => {
+  return request.put('/article', articleModel)
+}
