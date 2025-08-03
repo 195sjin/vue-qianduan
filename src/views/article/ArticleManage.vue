@@ -296,6 +296,9 @@ const deleteArticle = async (id) => {
                 <el-select placeholder="请选择" v-model="state" style="width: 180px;">
                     <el-option label="已发布" value="已发布"></el-option>
                     <el-option label="草稿" value="草稿"></el-option>
+                    <el-option label="待审批" value="待审批"></el-option>
+                    <el-option label="审批成功" value="审批成功"></el-option>
+                    <el-option label="审批失败" value="审批失败"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -378,7 +381,7 @@ const deleteArticle = async (id) => {
                     </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="addArticle('已发布')">发布</el-button>
+                    <el-button type="primary" @click="addArticle('待审批')">发布</el-button>
                     <el-button type="info" @click="addArticle('草稿')">草稿</el-button>
                 </el-form-item>
             </el-form>
@@ -439,7 +442,7 @@ const deleteArticle = async (id) => {
               </div>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="updateArticle('已发布')">发布</el-button>
+              <el-button type="primary" @click="updateArticle('待审批')">发布</el-button>
               <el-button type="info" @click="updateArticle('草稿')">保存为草稿</el-button>
             </el-form-item>
           </el-form>
