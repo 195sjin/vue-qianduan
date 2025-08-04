@@ -402,6 +402,9 @@ const deleteArticle = async (id) => {
             <el-form-item label="状态">
               <el-input v-model="articleDetail.state" disabled></el-input>
             </el-form-item>
+            <el-form-item label="审批意见">
+              <div v-html="articleDetail.advice" style="min-height: 50px;"></div>
+            </el-form-item>
             <el-form-item label="封面图片">
               <img v-if="articleDetail.coverImg" :src="articleDetail.coverImg" style="width: 200px; height: 150px; object-fit: cover;">
               <span v-else>无封面图片</span>
