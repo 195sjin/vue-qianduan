@@ -277,7 +277,7 @@ const deleteArticle = async (id) => {
     <el-card class="page-container">
         <template #header>
             <div class="header">
-                <span>文章管理</span>
+                <span>待发布文章列表</span>
                 <div class="extra">
                     <el-button type="primary" @click="visibleDrawer = true">添加文章</el-button>
                 </div>

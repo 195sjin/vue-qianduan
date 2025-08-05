@@ -87,7 +87,7 @@ const handleCommand = (command)=>{
                     <el-icon>
                         <Promotion />
                     </el-icon>
-                    <span>文章管理</span>
+                    <span>待发布文章管理</span>
                 </el-menu-item>
                 <el-menu-item index="/article/adviceAll">
                     <el-icon>
