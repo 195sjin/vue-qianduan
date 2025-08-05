@@ -38,7 +38,7 @@ const updateAvatar = async ()=>{
     <el-card class="page-container">
         <template #header>
             <div class="header">
-                <span>更换头像</span>
+                <span>更换头像------文件上传之后回显较慢，请耐心等待</span>
             </div>
         </template>
         <el-row>
