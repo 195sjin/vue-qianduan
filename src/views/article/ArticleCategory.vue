@@ -27,7 +27,7 @@ const categorys = ref([
         "updateTime": "2023-09-02 12:08:33"
     }
 ])
-//获取所有文章分类数据
+//获取所有作品分类数据
 import { articleCategoryListService,articleCategoryAddService,articleCategoryUpdateService,articleCategoryDeleteService } from '@/api/article.js'
 const getAllCategory = async () => {
     let result = await articleCategoryListService();
@@ -52,7 +52,7 @@ const rules = {
         { required: true, message: '请输入分类别名', trigger: 'blur' },
     ]
 }
-//访问后台，添加文章分类
+//访问后台，添加作品分类
 import { ElMessage } from 'element-plus'
 const addCategory = async ()=>{
     let result = await articleCategoryAddService(categoryModel.value);
@@ -105,7 +105,7 @@ const deleteCategory = (row) => {
             //用户点击了确认
             let result = await articleCategoryDeleteService(row.id)
             ElMessage.success(result.message?result.message:'删除成功')
-            //再次调用getAllCategory，获取所有文章分类
+            //再次调用getAllCategory，获取所有作品分类
             getAllCategory()
         })
         .catch(() => {
@@ -124,7 +124,7 @@ const deleteCategory = (row) => {
     <el-card class="page-container">
         <template #header>
             <div class="header">
-                <span>文章分类</span>
+                <span>作品分类</span>
                 <div class="extra">
                     <el-button type="primary" @click="title='添加分类';dialogVisible = true;clearCategoryModel()">添加分类</el-button>
                 </div>

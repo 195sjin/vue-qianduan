@@ -467,13 +467,13 @@ import avatar from '@/assets/default.png'
                     <el-icon>
                         <Management />
                     </el-icon>
-                    <span>文章分类</span>
+                    <span>作品分类</span>
                 </el-menu-item>
                 <el-menu-item >
                     <el-icon>
                         <Promotion />
                     </el-icon>
-                    <span>文章管理</span>
+                    <span>作品管理</span>
                 </el-menu-item>
                 <el-sub-menu >
                     <template #title>
@@ -751,15 +751,15 @@ el-menu-item 标签的index属性可以设置点击后的路由路径
     <el-icon>
         <Management />
     </el-icon>
-    <span>文章分类</span>
+    <span>作品分类</span>
 </el-menu-item>
 ```
 
 
 
-# 八、文章分类列表
+# 八、作品分类列表
 
-### 8.1 文章分类组件
+### 8.1 作品分类组件
 
 ```html
 <script setup>
@@ -796,7 +796,7 @@ const categorys = ref([
     <el-card class="page-container">
         <template #header>
             <div class="header">
-                <span>文章分类</span>
+                <span>作品分类</span>
                 <div class="extra">
                     <el-button type="primary">添加分类</el-button>
                 </div>
@@ -841,7 +841,7 @@ src/api/article.js
 //导入请求工具类
 import request from '@/utils/request.js'
 
-//文章分类列表查询
+//作品分类列表查询
 export const articleCategoryListService = ()=>{
     return request.get('/category')
 }
@@ -850,7 +850,7 @@ export const articleCategoryListService = ()=>{
 ArticleCategory.vue
 
 ```js
-//获取所有文章分类数据
+//获取所有作品分类数据
 import { articleCategoryListService } from '@/api/article.js'
 const getAllCategory = async () => {
     let result = await articleCategoryListService();
@@ -861,7 +861,7 @@ getAllCategory();
 
 
 
-但是上述的代码并不能真正的获取到所有文章分类数据，服务器响应状态码为401，因为目前请求头中并没有携带token
+但是上述的代码并不能真正的获取到所有作品分类数据，服务器响应状态码为401，因为目前请求头中并没有携带token
 
 
 
@@ -947,14 +947,14 @@ const login = async () => {
 
 
 
-在article.js中导入@/stores/token.js, 从pinia中获取到存储的token，在发起查询文章分类列表的时候把token通过请求头的形式携带给服务器
+在article.js中导入@/stores/token.js, 从pinia中获取到存储的token，在发起查询作品分类列表的时候把token通过请求头的形式携带给服务器
 
 ```js
 //导入@/stores/token.js
 import { useTokenStore } from '../stores/token'
 
 
-//文章分类列表查询
+//作品分类列表查询
 export const articleCategoryListService = () => {
     //获取token状态
     const tokenStore = useTokenStore()
@@ -1091,7 +1091,7 @@ instance.interceptors.response.use(
 
 
 
-# 十三、添加文章分类
+# 十三、添加作品分类
 
 ### 13.1 添加分类弹窗页面
 
@@ -1148,7 +1148,7 @@ const rules = {
 **在article.js中提供添加分类的函数**
 
 ```js
-//添加文章分类
+//添加作品分类
 export const articleCategoryAddService = (categoryModel) => {
     return request.post('/category', categoryModel)
 }
@@ -1157,7 +1157,7 @@ export const articleCategoryAddService = (categoryModel) => {
 **在页面中调用接口**
 
 ```js
-//访问后台，添加文章分类
+//访问后台，添加作品分类
 const addCategory = async ()=>{
     let result = await articleCategoryAddService(categoryModel.value);
     ElMessage.success(result.message? result.message:'添加成功')
@@ -1174,11 +1174,11 @@ const addCategory = async ()=>{
 
 
 
-# 十四、修改文章分类
+# 十四、修改作品分类
 
 ### 14.1 修改分类弹窗页面
 
-修改分类弹窗和新增文章分类弹窗长的一样，所以可以服用添加分类的弹窗
+修改分类弹窗和新增作品分类弹窗长的一样，所以可以服用添加分类的弹窗
 
 **弹窗标题显示**
 定义标题
@@ -1358,7 +1358,7 @@ const deleteCategory = (row) => {
             //用户点击了确认
             let result = await articleCategoryDeleteService(row.id)
             ElMessage.success(result.message?result.message:'删除成功')
-            //再次调用getAllCategory，获取所有文章分类
+            //再次调用getAllCategory，获取所有作品分类
             getAllCategory()
         })
         .catch(() => {
@@ -1373,9 +1373,9 @@ const deleteCategory = (row) => {
 
 
 
-# 十六、文章列表
+# 十六、作品列表
 
-### 16.1 文章列表页面组件
+### 16.1 作品列表页面组件
 
 ```html
 <script setup>
@@ -1386,7 +1386,7 @@ import {
 
 import { ref } from 'vue'
 
-//文章分类数据模型
+//作品分类数据模型
 const categorys = ref([
     {
         "id": 3,
@@ -1417,7 +1417,7 @@ const categoryId=ref('')
 //用户搜索时选中的发布状态
 const state=ref('')
 
-//文章列表数据模型
+//作品列表数据模型
 const articles = ref([
     {
         "id": 5,
@@ -1469,15 +1469,15 @@ const onCurrentChange = (num) => {
     <el-card class="page-container">
         <template #header>
             <div class="header">
-                <span>文章管理</span>
+                <span>作品管理</span>
                 <div class="extra">
-                    <el-button type="primary">添加文章</el-button>
+                    <el-button type="primary">添加作品</el-button>
                 </div>
             </div>
         </template>
         <!-- 搜索表单 -->
         <el-form inline>
-            <el-form-item label="文章分类：">
+            <el-form-item label="作品分类：">
                 <el-select placeholder="请选择" v-model="categoryId">
                     <el-option 
                         v-for="c in categorys" 
@@ -1499,9 +1499,9 @@ const onCurrentChange = (num) => {
                 <el-button>重置</el-button>
             </el-form-item>
         </el-form>
-        <!-- 文章列表 -->
+        <!-- 作品列表 -->
         <el-table :data="articles" style="width: 100%">
-            <el-table-column label="文章标题" width="400" prop="title"></el-table-column>
+            <el-table-column label="作品标题" width="400" prop="title"></el-table-column>
             <el-table-column label="分类" prop="categoryId"></el-table-column>
             <el-table-column label="发表时间" prop="createTime"> </el-table-column>
             <el-table-column label="状态" prop="state"></el-table-column>
@@ -1545,12 +1545,12 @@ import locale from 'element-plus/dist/locale/zh-cn.js'
 app.use(ElementPlus,{locale})
 ```
 
-### 16.2、文章分类数据回显
+### 16.2、作品分类数据回显
 
 **ArticleMange.vue**
 
 ```js
-//文章列表查询
+//作品列表查询
 import { articleCategoryListService } from '@/api/article.js'
 const getArticleCategoryList = async () => {
     //获取所有分类
@@ -1562,12 +1562,12 @@ getArticleCategoryList();
 
 # 
 
-# 十七、 文章列表接口调用
+# 十七、 作品列表接口调用
 
-**article.js中提供获取文章列表数据的函数**
+**article.js中提供获取作品列表数据的函数**
 
 ```js
-//文章列表查询
+//作品列表查询
 export const articleListService = (params) => {
     return request.get('/article', { params: params })
 }
@@ -1576,7 +1576,7 @@ export const articleListService = (params) => {
 **ArticleManage.vue中，调用接口获取数据**
 
 ```js
-//文章列表查询
+//作品列表查询
 import { articleListService } from '@/api/article.js'
 const getArticles = async () => {
     let params = {
@@ -1637,9 +1637,9 @@ const onCurrentChange = (num) => {
 
 
 
-# 十九、添加文章
+# 十九、添加作品
 
-### 19.1 添加文章抽屉组件
+### 19.1 添加作品抽屉组件
 
 ```js
 import {Plus} from '@element-plus/icons-vue'
@@ -1657,19 +1657,19 @@ const articleModel = ref({
 
 ```html
 <!-- 抽屉 -->
-        <el-drawer v-model="visibleDrawer" title="添加文章" direction="rtl" size="50%">
-            <!-- 添加文章表单 -->
+        <el-drawer v-model="visibleDrawer" title="添加作品" direction="rtl" size="50%">
+            <!-- 添加作品表单 -->
             <el-form :model="articleModel" label-width="100px" >
-                <el-form-item label="文章标题" >
+                <el-form-item label="作品标题" >
                     <el-input v-model="articleModel.title" placeholder="请输入标题"></el-input>
                 </el-form-item>
-                <el-form-item label="文章分类">
+                <el-form-item label="作品分类">
                     <el-select placeholder="请选择" v-model="articleModel.categoryId">
                         <el-option v-for="c in categorys" :key="c.id" :label="c.categoryName" :value="c.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="文章封面">
+                <el-form-item label="作品封面">
 
                     <el-upload class="avatar-uploader" :auto-upload="false" :show-file-list="false">
                         <img v-if="articleModel.coverImg" :src="articleModel.coverImg" class="avatar" />
@@ -1678,7 +1678,7 @@ const articleModel = ref({
                         </el-icon>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="文章内容">
+                <el-form-item label="作品内容">
                     <div class="editor">富文本编辑器</div>
                 </el-form-item>
                 <el-form-item>
@@ -1731,17 +1731,17 @@ const articleModel = ref({
 
 
 
-为添加文章按钮添加单击事件，展示抽屉
+为添加作品按钮添加单击事件，展示抽屉
 
 ```html
-<el-button type="primary" @click="visibleDrawer = true">添加文章</el-button>
+<el-button type="primary" @click="visibleDrawer = true">添加作品</el-button>
 ```
 
 
 
 ### 19.2 富文本编辑器
 
-文章内容需要使用到富文本编辑器，这里咱们使用一个开源的富文本编辑器 Quill
+作品内容需要使用到富文本编辑器，这里咱们使用一个开源的富文本编辑器 Quill
 
 官网地址： https://vueup.github.io/vue-quill/
 
@@ -1783,7 +1783,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 
 
-### 19.3 文章封面图片上传
+### 19.3 作品封面图片上传
 
 将来当点击+图标，选择本地图片后，el-upload这个组件会自动发送请求，把图片上传到指定的服务器上，而不需要我们自己使用axios发送异步请求，所以需要给el-upload标签添加一些属性，控制请求的发送
 
@@ -1808,7 +1808,7 @@ import {
     Plus
 } from '@element-plus/icons-vue'
 
-<el-form-item label="文章封面">
+<el-form-item label="作品封面">
     <el-upload class="avatar-uploader" 
                :show-file-list="false" 
                >
@@ -1843,12 +1843,12 @@ import {
 
 
 
-### 19.4 添加文章接口调用
+### 19.4 添加作品接口调用
 
-**article.js中提供添加文章函数**
+**article.js中提供添加作品函数**
 
 ```js
-//添加文章
+//添加作品
 export const articleAddService = (articleModel)=>{
     return request.post('/article',articleModel)
 }
@@ -1863,15 +1863,15 @@ export const articleAddService = (articleModel)=>{
 </el-form-item>
 ```
 
-**ArticleManage.vue中提供addArticle函数完成添加文章接口的调用**
+**ArticleManage.vue中提供addArticle函数完成添加作品接口的调用**
 
 ```js
-//添加文章
+//添加作品
 const addArticle=async (state)=>{
     articleModel.value.state = state
     let result = await articleAddService(articleModel.value);
     ElMessage.success(result.message? result.message:'添加成功')
-    //再次调用getArticles,获取文章
+    //再次调用getArticles,获取作品
     getArticles()
     //隐藏抽屉
     visibleDrawer.value=false
