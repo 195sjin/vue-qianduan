@@ -3,6 +3,7 @@ import LoginVue from '@/views/Login.vue';
 import LayoutVue from '@/views/Layout.vue';
 import ArticleCategoryVue from '@/views/article/ArticleCategory.vue';
 import ArticleManageVue from '@/views/article/ArticleManage.vue';
+import ArticleAdviceAllVue from '@/views/article/ArticleAdviceAll.vue';
 import UserInfoVue from '@/views/user/UserInfo.vue';
 import UserAvatarVUe from '@/views/user/UserAvatar.vue';
 import UserResetPasswordVue from '@/views/user/UserResetPassword.vue';
@@ -13,6 +14,7 @@ const routes = [
         children: [
             { path: '/article/category', component: ArticleCategoryVue },
             { path: '/article/manage', component: ArticleManageVue },
+            { path: '/article/adviceAll', component: ArticleAdviceAllVue },
             { path: '/user/info', component: UserInfoVue },
             { path: '/user/avatar', component: UserAvatarVUe },
             { path: '/user/resetPassword', component: UserResetPasswordVue,

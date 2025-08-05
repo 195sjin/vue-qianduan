@@ -27,6 +27,10 @@ export const articleCategoryDeleteService = (id) => {
 export const articleListService = (params) => {
     return request.get('/article', { params: params })
 }
+//文章已审批列表查询
+export const articleAdviceListService = (params) => {
+    return request.get('/article/adviceAll', { params: params })
+}
 //添加文章
 export const articleAddService = (articleModel)=>{
     return request.post('/article',articleModel)
