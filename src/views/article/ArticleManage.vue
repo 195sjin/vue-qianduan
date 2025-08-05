@@ -340,7 +340,7 @@ const deleteArticle = async (id) => {
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="作品封面">
+                <el-form-item label="作品">
 
 
                     <!-- 
@@ -371,7 +371,7 @@ const deleteArticle = async (id) => {
                         </el-icon>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="作品内容">
+                <el-form-item label="作品描述">
                     <div class="editor">
                         <quill-editor theme="snow" v-model:content="articleModel.content" contentType="html">
                         </quill-editor>
@@ -402,11 +402,11 @@ const deleteArticle = async (id) => {
             <el-form-item label="审批意见">
               <div v-html="articleDetail.advice" style="min-height: 50px;"></div>
             </el-form-item>
-            <el-form-item label="封面图片">
+            <el-form-item label="作品">
               <img v-if="articleDetail.coverImg" :src="articleDetail.coverImg" style="width: 200px; height: 150px; object-fit: cover;">
-              <span v-else>无封面图片</span>
+              <span v-else>无作品</span>
             </el-form-item>
-            <el-form-item label="作品内容">
+            <el-form-item label="作品描述">
               <div v-html="articleDetail.content" style="min-height: 200px;"></div>
             </el-form-item>
           </el-form>
@@ -423,7 +423,7 @@ const deleteArticle = async (id) => {
                 <el-option v-for="c in categorys" :key="c.id" :label="c.categoryName" :value="c.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="作品封面">
+            <el-form-item label="作品">
               <el-upload class="avatar-uploader" :auto-upload="true" :show-file-list="false"
                 action="/api/upload"
                 name="file"
@@ -436,7 +436,7 @@ const deleteArticle = async (id) => {
                 </el-icon>
               </el-upload>
             </el-form-item>
-            <el-form-item label="作品内容">
+            <el-form-item label="作品描述">
               <div class="editor">
                 <quill-editor theme="snow" v-model:content="editArticleModel.content" contentType="html"></quill-editor>
               </div>

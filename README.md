@@ -1669,7 +1669,7 @@ const articleModel = ref({
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="作品封面">
+                <el-form-item label="作品">
 
                     <el-upload class="avatar-uploader" :auto-upload="false" :show-file-list="false">
                         <img v-if="articleModel.coverImg" :src="articleModel.coverImg" class="avatar" />
@@ -1678,7 +1678,7 @@ const articleModel = ref({
                         </el-icon>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="作品内容">
+                <el-form-item label="作品描述">
                     <div class="editor">富文本编辑器</div>
                 </el-form-item>
                 <el-form-item>
@@ -1741,7 +1741,7 @@ const articleModel = ref({
 
 ### 19.2 富文本编辑器
 
-作品内容需要使用到富文本编辑器，这里咱们使用一个开源的富文本编辑器 Quill
+作品描述需要使用到富文本编辑器，这里咱们使用一个开源的富文本编辑器 Quill
 
 官网地址： https://vueup.github.io/vue-quill/
 
@@ -1783,7 +1783,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 
 
-### 19.3 作品封面图片上传
+### 19.3 作品作品上传
 
 将来当点击+图标，选择本地图片后，el-upload这个组件会自动发送请求，把图片上传到指定的服务器上，而不需要我们自己使用axios发送异步请求，所以需要给el-upload标签添加一些属性，控制请求的发送
 
@@ -1808,7 +1808,7 @@ import {
     Plus
 } from '@element-plus/icons-vue'
 
-<el-form-item label="作品封面">
+<el-form-item label="作品">
     <el-upload class="avatar-uploader" 
                :show-file-list="false" 
                >
