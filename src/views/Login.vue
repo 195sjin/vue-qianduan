@@ -5,7 +5,7 @@
             <!-- 注册表单 -->
             <el-form ref="registerForm" size="large" autocomplete="off" v-if="isRegister" :model="registerData" :rules="registerRules">
                 <el-form-item>
-                    <h1>注册</h1>
+                    <h1>用户注册</h1>
                 </el-form-item>
                 <el-form-item prop="username">
                     <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
@@ -31,7 +31,7 @@
             <!-- 登录表单 -->
             <el-form ref="loginForm" size="large" autocomplete="off" v-else :model="loginData" :rules="loginRules">
                 <el-form-item>
-                    <h1>登录</h1>
+                    <h1>用户登录</h1>
                 </el-form-item>
                 <el-form-item prop="username">
                     <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="loginData.username"></el-input>
