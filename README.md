@@ -461,7 +461,7 @@ import avatar from '@/assets/default.png'
         <!-- 左侧菜单 -->
         <el-aside width="200px">
             <div class="el-aside__logo"></div>
-            <el-menu active-text-color="#ffd04b" background-color="#232323"  text-color="#fff"
+            <el-menu active-text-color="#ffd04b" background-color="#add8e6"  text-color="#fff"
                 router>
                 <el-menu-item >
                     <el-icon>
@@ -542,7 +542,7 @@ import avatar from '@/assets/default.png'
     height: 100vh;
 
     .el-aside {
-        background-color: #232323;
+        background-color: #add8e6;
 
         &__logo {
             height: 120px;
