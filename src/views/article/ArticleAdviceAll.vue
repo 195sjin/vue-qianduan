@@ -304,7 +304,7 @@ const deleteArticle = async (id) => {
         <el-table :data="articles" style="width: 100%">
             <el-table-column label="作品标题" width="400" prop="title"></el-table-column>
             <el-table-column label="分类" prop="categoryName"></el-table-column>
-            <el-table-column label="发表时间" prop="createTime"> </el-table-column>
+            <el-table-column label="发表时间" prop="updateTime"> </el-table-column>
             <el-table-column label="状态" prop="state"></el-table-column>
             // 修改操作列的模板代码
             <el-table-column label="操作" width="150">
@@ -391,7 +391,7 @@ const deleteArticle = async (id) => {
               <el-input v-model="articleDetail.categoryName" disabled></el-input>
             </el-form-item>
             <el-form-item label="发表时间">
-              <el-input v-model="articleDetail.createTime" disabled></el-input>
+              <el-input v-model="articleDetail.updateTime" disabled></el-input>
             </el-form-item>
             <el-form-item label="状态">
               <el-input v-model="articleDetail.state" disabled></el-input>

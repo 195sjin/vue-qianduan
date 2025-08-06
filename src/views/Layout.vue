@@ -127,8 +127,7 @@ const handleCommand = (command)=>{
         <el-container>
             <!-- 头部区域 -->
             <el-header>
-                <div>您的用户昵称为：<strong>{{ userInfoStore.info.nickname ? userInfoStore.info.nickname :
-                        userInfoStore.info.usrename }}
+                <div>您的用户昵称为：<strong>{{ userInfoStore.info.nickname ? userInfoStore.info.nickname : userInfoStore.info.username }}
                     </strong></div>
 
                 <el-dropdown placement="bottom-end" @command="handleCommand">
